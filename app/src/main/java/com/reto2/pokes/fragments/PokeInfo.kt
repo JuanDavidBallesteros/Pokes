@@ -32,32 +32,45 @@ class PokeInfo : Fragment() {
         binding.welcomeTX.text = "Welcome ${myActivity.user?.username}"
 
         binding.profileSignoutBtn2.setOnClickListener{
-            myActivity?.singout(it)
+            myActivity.singout(it)
         }
 
         adapter.myActivity = myActivity
         binding.pokesRV.adapter = adapter
         binding.pokesRV.layoutManager = LinearLayoutManager(context)
 
-        binding.catchBtn.setOnClickListener(::pokeSearch)
-
-
+        binding.catchBtn.setOnClickListener {
+            getPoke(1)
+        }
+        binding.seeBtn.setOnClickListener {
+            getPoke(0)
+        }
 
         return binding.root
     }
-    private fun pokeSearch(view: View?) {
-        if(binding.catchTF2.text.toString() != ""){
-            val search = pokeApi.getByName(binding.catchTF2.text.toString())
 
-            pokeApi.poke.observe(this){
-                myActivity.pokeDetail.setPoke(it)
-                myActivity.showFragment(myActivity.pokeDetail)
+    private fun getPoke(type : Number){
+
+        if(binding.catchTF2.text.toString() != ""){
+            pokeApi.getByName(binding.catchTF2.text.toString())
+
+            pokeApi.poke.observe(viewLifecycleOwner){
+
+                when (type) {
+                    0  -> {
+                        myActivity.pokeDetail.setPoke(it)
+                        myActivity.showFragment(myActivity.pokeDetail)
+                    }
+                    1 -> {
+                        myActivity.catchPoke(it)
+                    }
+                }
+
             }
 
         }else{
             Toast.makeText(context, "Campo Vacío", Toast.LENGTH_LONG).show()
         }
-
     }
 
     companion object {

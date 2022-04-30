@@ -34,25 +34,25 @@
         app:layout_constraintTop_toBottomOf="@+id/profileSignoutBtn2" />
 
     <Button
-        android:id="@+id/catchBtn"
+        android:id="@+id/seeBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ver"
-        app:layout_constraintEnd_toStartOf="@+id/viewBtn"
+        app:layout_constraintEnd_toStartOf="@+id/catchBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/catchTF2"
         app:layout_constraintTop_toBottomOf="@+id/catchTF2" />
 
     <Button
-        android:id="@+id/viewBtn"
+        android:id="@+id/catchBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:text="Atrapar"
-        app:layout_constraintBottom_toBottomOf="@+id/catchBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/seeBtn"
         app:layout_constraintEnd_toEndOf="@+id/catchTF2"
-        app:layout_constraintStart_toEndOf="@+id/catchBtn"
-        app:layout_constraintTop_toTopOf="@+id/catchBtn" />
+        app:layout_constraintStart_toEndOf="@+id/seeBtn"
+        app:layout_constraintTop_toTopOf="@+id/seeBtn" />
 
     <EditText
         android:id="@+id/searchTF"
@@ -75,9 +75,9 @@
         android:layout_marginTop="16dp"
         android:text="Mis Pokemones"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/viewBtn"
-        app:layout_constraintStart_toStartOf="@+id/catchBtn"
-        app:layout_constraintTop_toBottomOf="@+id/catchBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/catchBtn"
+        app:layout_constraintStart_toStartOf="@+id/seeBtn"
+        app:layout_constraintTop_toBottomOf="@+id/seeBtn" />
 
     <Button
         android:id="@+id/searchBtn"
@@ -108,6 +108,6 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/profileSignoutBtn2"
-        app:layout_constraintStart_toStartOf="@+id/catchBtn"
+        app:layout_constraintStart_toStartOf="@+id/seeBtn"
         app:layout_constraintTop_toTopOf="@+id/profileSignoutBtn2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

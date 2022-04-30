@@ -20,6 +20,7 @@ class Adapter() : RecyclerView.Adapter<PostVH>() {
         for (i in 1..3){
             postList.add(Poke(
                 "",
+                "",
                 "POKES ${i}",
                 "Veloz",
                 i*34,

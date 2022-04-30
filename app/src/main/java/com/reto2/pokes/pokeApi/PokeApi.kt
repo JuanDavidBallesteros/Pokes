@@ -47,22 +47,20 @@ class PokeApi: ViewModel() {
             val displayDate = "${date[1]} ${date[2]} de ${date[5]}"
 
             val temp = Poke(
+                UUID.randomUUID().toString(),
                 obj.sprites.other.home.front_default,
                 obj.name,
                 obj.types[0].type.name,
-                obj.stats[0].base_stat,
-                obj.stats[0].base_stat,
-                obj.stats[0].base_stat,
+                obj.stats[1].base_stat,
+                obj.stats[2].base_stat,
+                obj.stats[5].base_stat,
                 obj.stats[0].base_stat,
                 displayDate
             )
 
-            //Log.e("-->",formatted)
-
             withContext(Dispatchers.Main){
                 _poke.value = temp
             }
-
         }
 
     }
@@ -93,7 +91,7 @@ class PokeApi: ViewModel() {
 
     //parts stats
     data class SatatItem(
-        var base_stat:Number,
+        var base_stat:Int,
         var stat:Stat
     )
 

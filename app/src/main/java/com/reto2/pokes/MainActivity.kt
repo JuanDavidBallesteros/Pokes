@@ -15,7 +15,9 @@ import com.google.firebase.ktx.Firebase
 import com.reto2.pokes.databinding.ActivityMainBinding
 import com.reto2.pokes.fragments.PokeDetail
 import com.reto2.pokes.fragments.PokeInfo
+import com.reto2.pokes.model.Poke
 import com.reto2.pokes.model.User
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,6 +70,31 @@ class MainActivity : AppCompatActivity() {
         Log.e(">>>","BYE")
         Firebase.auth.signOut()
         startActivity((Intent(this,LoginActivity::class.java)))
+    }
 
+    fun freePoke( poke: Poke) {
+        user?.let {
+                user ->
+            Firebase.firestore.collection("users")
+                .document(user.id).collection("pokes")
+                .document(poke.id).delete()
+                .addOnSuccessListener{
+                    Toast.makeText(this,"Poke liberado", Toast.LENGTH_LONG)
+                }
+        }
+
+    }
+
+    fun catchPoke(poke: Poke) {
+
+        user?.let {
+                user ->
+            Firebase.firestore.collection("users")
+                .document(user.id).collection("pokes")
+                .document().set(poke)
+                .addOnSuccessListener{
+                    Toast.makeText(this,"Poke atrapado", Toast.LENGTH_LONG)
+                }
+        }
     }
 }

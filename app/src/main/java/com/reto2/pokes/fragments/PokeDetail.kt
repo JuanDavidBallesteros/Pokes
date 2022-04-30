@@ -25,22 +25,26 @@ class PokeDetail : Fragment() {
     ): View? {
         binding = PokeDetailBinding.inflate(layoutInflater,container,false)
 
-        val myActivity = activity as? MainActivity
+        val myActivity = (activity as? MainActivity)!!
 
         binding.profileSignoutBtn1.setOnClickListener{
-            myActivity?.singout(it)
+            myActivity.singout(it)
         }
         if(isCatch){
             binding.catchBtn2.visibility = View.GONE
             binding.freeBtn.visibility = View.VISIBLE
+            binding.pokaDateDetail.text = pokeToRender.catchDate
+            binding.pokaDateDetail.visibility = View.VISIBLE
         } else {
             binding.freeBtn.visibility = View.GONE
             binding.catchBtn2.visibility = View.VISIBLE
+            binding.pokaDateDetail.visibility = View.GONE
         }
 
         binding.back.setOnClickListener {
-            myActivity?.showFragment(myActivity?.pokeInfo)
+            myActivity.showFragment(myActivity.pokeInfo)
         }
+
 
         binding.pokeAtaqueDetail.text = "${pokeToRender.attack}"
         binding.pokeDefensaDetail.text = "${pokeToRender.defence}"
@@ -51,8 +55,17 @@ class PokeDetail : Fragment() {
         binding.pokePoderDetail.text = pokeToRender.power
 
 
+        binding.catchBtn2.setOnClickListener{
+            myActivity.catchPoke(pokeToRender)
+        }
+        binding.freeBtn.setOnClickListener{
+            myActivity.freePoke(pokeToRender)
+        }
+
+
         return binding.root
     }
+
 
     fun setPoke (poke: Poke){
         pokeToRender = poke
