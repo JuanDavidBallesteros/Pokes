@@ -120,5 +120,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    fun pokeSearch(pokeName:String){
+        var name = pokeName.lowercase()
+        user?.let {
+                user ->
+            Firebase.firestore.collection("users")
+                .document(user.id).collection("pokes")
+                .whereEqualTo("name", name).get()
+                .addOnSuccessListener{
+                        docSnap ->
+                    val pokesList = docSnap.toObjects(Poke::class.java)
+                    pokeInfo.adapter.setpokeList(pokesList as ArrayList<Poke>)
+                }.addOnFailureListener {
+                    Log.e("deleteFail->",it.toString())
+                }
+        }
+    }
 }

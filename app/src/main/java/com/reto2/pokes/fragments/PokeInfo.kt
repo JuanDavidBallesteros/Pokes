@@ -57,6 +57,14 @@ class PokeInfo : Fragment() {
             getPoke(0)
         }
 
+        binding.searchBtn.setOnClickListener {
+            if(binding.searchTF.text.toString() != ""){
+                myActivity.pokeSearch(binding.searchTF.text.toString())
+            } else{
+                Toast.makeText(context, "Campo Vacío", Toast.LENGTH_LONG).show()
+            }
+        }
+
         return binding.root
     }
 

@@ -36,7 +36,7 @@ class PokeApi: ViewModel() {
         var json = ""
 
         viewModelScope.launch (Dispatchers.IO){ // IO es un nuevo hilo, main mantiene el mismo hilo
-            val url = URL("$urlT$name")
+            val url = URL("$urlT${name.lowercase()}")
             connection = url.openConnection() as HttpsURLConnection
             connection.requestMethod = "GET"
             try {
