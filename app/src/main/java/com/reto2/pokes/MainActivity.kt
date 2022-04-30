@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             document(uid!!).get().addOnSuccessListener {
                     docSnap ->
                 user = docSnap.toObject(User::class.java)
-                Toast.makeText(this,user?.username, Toast.LENGTH_LONG)
+                Toast.makeText(this,user?.username, Toast.LENGTH_LONG).show()
 
                 //Crear fragmentos
                 pokeInfo = PokeInfo.newInstance()
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         Log.e(">>>","BYE")
         Firebase.auth.signOut()
         startActivity((Intent(this,LoginActivity::class.java)))
+        finish()
     }
 
     fun freePoke( poke: Poke) {
@@ -94,8 +95,11 @@ class MainActivity : AppCompatActivity() {
                 .document(user.id).collection("pokes")
                 .document(poke.id).delete()
                 .addOnSuccessListener{
-                    Toast.makeText(this,"Poke liberado", Toast.LENGTH_LONG)
+                    Toast.makeText(this,"Poke liberado", Toast.LENGTH_LONG).show()
                     catchedPokeList(pokeInfo.adapter)
+
+                }.addOnFailureListener {
+                    Log.e("deleteFail->",it.toString())
                 }
         }
     }
@@ -106,10 +110,12 @@ class MainActivity : AppCompatActivity() {
                 user ->
             Firebase.firestore.collection("users")
                 .document(user.id).collection("pokes")
-                .document().set(poke)
+                .document(poke.id).set(poke)
                 .addOnSuccessListener{
-                    Toast.makeText(this,"Poke atrapado", Toast.LENGTH_LONG)
+                    Toast.makeText(this,"Poke atrapado", Toast.LENGTH_LONG).show()
                     catchedPokeList(pokeInfo.adapter)
+                }.addOnFailureListener {
+                    Log.e("deleteFail->",it.toString())
                 }
         }
     }
