@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "474358753197",
+    "project_id": "auth-abdroid-22-1",
+    "storage_bucket": "auth-abdroid-22-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474358753197:android:04167f0d3725eea4c96324",
+        "android_client_info": {
+          "package_name": "com.reto2.pokes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474358753197-n6bl686e7grdknjd1mururspnsmr4hcc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrt0TX5ZAAUopA7cdvSwRxar7qIX6aTOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474358753197-n6bl686e7grdknjd1mururspnsmr4hcc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474358753197:android:bae393a1f3cf412fc96324",
+        "android_client_info": {
+          "package_name": "edu.co.icesi.claseauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474358753197-n6bl686e7grdknjd1mururspnsmr4hcc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrt0TX5ZAAUopA7cdvSwRxar7qIX6aTOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474358753197-n6bl686e7grdknjd1mururspnsmr4hcc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

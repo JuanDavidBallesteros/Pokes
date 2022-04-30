@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/profileSignoutBtn2"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:icon="@drawable/ic_exit"
+        app:iconSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/catchTF2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Atrapa un pokemon"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileSignoutBtn2" />
+
+    <Button
+        android:id="@+id/catchBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ver"
+        app:layout_constraintEnd_toStartOf="@+id/viewBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/catchTF2"
+        app:layout_constraintTop_toBottomOf="@+id/catchTF2" />
+
+    <Button
+        android:id="@+id/viewBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="Atrapar"
+        app:layout_constraintBottom_toBottomOf="@+id/catchBtn"
+        app:layout_constraintEnd_toEndOf="@+id/catchTF2"
+        app:layout_constraintStart_toEndOf="@+id/catchBtn"
+        app:layout_constraintTop_toTopOf="@+id/catchBtn" />
+
+    <EditText
+        android:id="@+id/searchTF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Buscar"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mis Pokemones"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/viewBtn"
+        app:layout_constraintStart_toStartOf="@+id/catchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/catchBtn" />
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="Ir"
+        app:layout_constraintBottom_toBottomOf="@+id/searchTF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchTF"
+        app:layout_constraintTop_toTopOf="@+id/searchTF" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pokesRV"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchTF" />
+
+    <TextView
+        android:id="@+id/welcomeTX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome user"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/profileSignoutBtn2"
+        app:layout_constraintStart_toStartOf="@+id/catchBtn"
+        app:layout_constraintTop_toTopOf="@+id/profileSignoutBtn2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
