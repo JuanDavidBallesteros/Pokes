@@ -3,6 +3,7 @@ package com.reto2.pokes.pokeApi
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.google.gson.Gson
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.io.FileNotFoundException
 import java.net.URL
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -33,36 +35,43 @@ class PokeApi: ViewModel() {
     fun getByName(name: String) {
         var json = ""
 
-
         viewModelScope.launch (Dispatchers.IO){ // IO es un nuevo hilo, main mantiene el mismo hilo
             val url = URL("$urlT$name")
             connection = url.openConnection() as HttpsURLConnection
             connection.requestMethod = "GET"
-            json = connection.inputStream.bufferedReader().readText()
-            //Log.e("-->",json)
+            try {
+                json = connection.inputStream.bufferedReader().readText()
+                //Log.e("-->",json)
 
-            val obj = Gson().fromJson(json, PokeJson::class.java)
+                val obj = Gson().fromJson(json, PokeJson::class.java)
 
-            val date = Calendar.getInstance().time.toString().split(' ')
-            val displayDate = "${date[1]} ${date[2]} de ${date[5]}"
+                val date = Calendar.getInstance().time.toString().split(' ')
+                val displayDate = "${date[1]} ${date[2]} de ${date[5]}"
 
-            val temp = Poke(
-                UUID.randomUUID().toString(),
-                obj.sprites.other.home.front_default,
-                obj.name,
-                obj.types[0].type.name,
-                obj.stats[1].base_stat,
-                obj.stats[2].base_stat,
-                obj.stats[5].base_stat,
-                obj.stats[0].base_stat,
-                displayDate
-            )
+                val temp = Poke(
+                    UUID.randomUUID().toString(),
+                    obj.sprites.other.home.front_default,
+                    obj.name,
+                    obj.types[0].type.name,
+                    obj.stats[1].base_stat,
+                    obj.stats[2].base_stat,
+                    obj.stats[5].base_stat,
+                    obj.stats[0].base_stat,
+                    displayDate
+                )
 
-            withContext(Dispatchers.Main){
-                _poke.value = temp
+                withContext(Dispatchers.Main){
+                    _poke.value = temp
+                }
+
+            } catch (e: FileNotFoundException){
+                Log.e("EEE=>",e.toString())
+            } catch (e2: Exception){
+                Log.e("EEE=>",e2.toString())
+            } finally {
+                connection.disconnect()
             }
         }
-
     }
 
     companion object {

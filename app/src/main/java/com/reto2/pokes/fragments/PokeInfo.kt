@@ -29,6 +29,8 @@ class PokeInfo : Fragment() {
 
         myActivity = (activity as? MainActivity)!!
 
+
+
         binding.welcomeTX.text = "Welcome ${myActivity.user?.username}"
 
         binding.profileSignoutBtn2.setOnClickListener{
@@ -36,8 +38,17 @@ class PokeInfo : Fragment() {
         }
 
         adapter.myActivity = myActivity
+
         binding.pokesRV.adapter = adapter
         binding.pokesRV.layoutManager = LinearLayoutManager(context)
+
+        adapter.postList.observe(viewLifecycleOwner){
+            pokeList ->
+            binding.pokesRV.adapter = adapter
+        }
+
+        myActivity.catchedPokeList(adapter)
+
 
         binding.catchBtn.setOnClickListener {
             getPoke(1)

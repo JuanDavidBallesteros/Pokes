@@ -17,7 +17,9 @@ import com.reto2.pokes.fragments.PokeDetail
 import com.reto2.pokes.fragments.PokeInfo
 import com.reto2.pokes.model.Poke
 import com.reto2.pokes.model.User
+import com.reto2.pokes.pokeList.Adapter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,6 +61,19 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    fun catchedPokeList(adapter: Adapter){
+        user?.let {
+                user ->
+            Firebase.firestore.collection("users")
+                .document(user.id).collection("pokes").get()
+                .addOnSuccessListener{
+                        docSnap ->
+                        val pokesList = docSnap.toObjects(Poke::class.java)
+                    adapter.setpokeList(pokesList as ArrayList<Poke>)
+                }
+        }
+    }
+
     fun showFragment(fragment: Fragment?) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
@@ -80,9 +95,9 @@ class MainActivity : AppCompatActivity() {
                 .document(poke.id).delete()
                 .addOnSuccessListener{
                     Toast.makeText(this,"Poke liberado", Toast.LENGTH_LONG)
+                    catchedPokeList(pokeInfo.adapter)
                 }
         }
-
     }
 
     fun catchPoke(poke: Poke) {
@@ -94,7 +109,10 @@ class MainActivity : AppCompatActivity() {
                 .document().set(poke)
                 .addOnSuccessListener{
                     Toast.makeText(this,"Poke atrapado", Toast.LENGTH_LONG)
+                    catchedPokeList(pokeInfo.adapter)
                 }
         }
     }
+
+
 }

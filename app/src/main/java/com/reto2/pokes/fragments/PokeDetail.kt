@@ -57,9 +57,11 @@ class PokeDetail : Fragment() {
 
         binding.catchBtn2.setOnClickListener{
             myActivity.catchPoke(pokeToRender)
+            myActivity.showFragment(myActivity.pokeInfo)
         }
         binding.freeBtn.setOnClickListener{
             myActivity.freePoke(pokeToRender)
+            myActivity.showFragment(myActivity.pokeInfo)
         }
 
 

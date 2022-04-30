@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.reto2.pokes.MainActivity
 import com.reto2.pokes.R
@@ -13,22 +15,16 @@ import com.reto2.pokes.model.Poke
 
 class Adapter() : RecyclerView.Adapter<PostVH>() {
 
-    var postList = ArrayList<Poke>()
+    private var _postList: MutableLiveData<ArrayList<Poke>> = MutableLiveData()
+    val postList: LiveData<ArrayList<Poke>>
+        get() {
+            return _postList
+        }
+
     lateinit var myActivity: MainActivity
 
     init {
-        for (i in 1..3){
-            postList.add(Poke(
-                "",
-                "",
-                "POKES ${i}",
-                "Veloz",
-                i*34,
-                i*45,
-                i*67,
-                i*12,
-                "Hoy"))
-        }
+        _postList.value = ArrayList<Poke>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostVH {
@@ -38,8 +34,8 @@ class Adapter() : RecyclerView.Adapter<PostVH>() {
 
     override fun onBindViewHolder(holder: PostVH, position: Int) {
 
-        holder.postName.text = postList[position].name
-        holder.postDate.text = postList[position].catchDate
+        holder.postName.text = _postList.value!![position].name
+        holder.postDate.text = _postList.value!![position].catchDate
 
         // Poke Img
         /*
@@ -62,19 +58,24 @@ class Adapter() : RecyclerView.Adapter<PostVH>() {
 
 
         holder.postFrame.setOnClickListener {
-
+            myActivity.pokeDetail.setPoke(_postList.value!![position])
+            myActivity.pokeDetail.isCatch = true
             myActivity.showFragment(myActivity.pokeDetail)
         }
 
     }
 
     override fun getItemCount(): Int {
-        return postList.size
+        return _postList.value?.size!!
     }
 
     fun addPost(temp: Poke) {
-        postList.add(temp)
-        notifyItemInserted(postList.size - 1)
+        _postList.value!!.add(temp)
+        notifyItemInserted(_postList.value!!.size - 1)
+    }
+
+    fun setpokeList (pokeList: ArrayList<Poke>){
+        _postList.value = pokeList
     }
 
 }
