@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.reto2.pokes.MainActivity
 import com.reto2.pokes.R
 import com.reto2.pokes.databinding.PokeDetailBinding
 import com.reto2.pokes.databinding.PokeInfoBinding
 import com.reto2.pokes.model.Poke
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PokeDetail : Fragment() {
 
@@ -17,6 +20,7 @@ class PokeDetail : Fragment() {
     private lateinit var pokeToRender: Poke
 
     var isCatch:Boolean = false
+    val df = SimpleDateFormat("yyyy.MM.dd")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +34,11 @@ class PokeDetail : Fragment() {
         binding.profileSignoutBtn1.setOnClickListener{
             myActivity.singout(it)
         }
+
         if(isCatch){
             binding.catchBtn2.visibility = View.GONE
             binding.freeBtn.visibility = View.VISIBLE
-            binding.pokaDateDetail.text = pokeToRender.catchDate
+            binding.pokaDateDetail.text = df.format(Date(pokeToRender.catchDate))
             binding.pokaDateDetail.visibility = View.VISIBLE
         } else {
             binding.freeBtn.visibility = View.GONE
@@ -45,6 +50,7 @@ class PokeDetail : Fragment() {
             myActivity.showFragment(myActivity.pokeInfo)
         }
 
+        Glide.with(this).load(pokeToRender.img).centerCrop().into(binding.pokeImg)
 
         binding.pokeAtaqueDetail.text = "${pokeToRender.attack}"
         binding.pokeDefensaDetail.text = "${pokeToRender.defence}"

@@ -12,6 +12,7 @@ import com.reto2.pokes.MainActivity
 import com.reto2.pokes.databinding.PokeInfoBinding
 import com.reto2.pokes.pokeApi.PokeApi
 import com.reto2.pokes.pokeList.Adapter
+import java.util.*
 
 class PokeInfo : Fragment() {
     private lateinit var binding: PokeInfoBinding
@@ -29,7 +30,8 @@ class PokeInfo : Fragment() {
 
         myActivity = (activity as? MainActivity)!!
 
-
+        pokeApi.mainActivity = myActivity
+        // Log.e(">>>>>>", "${Date().time}")
 
         binding.welcomeTX.text = "Welcome ${myActivity.user?.username}"
 
@@ -60,6 +62,7 @@ class PokeInfo : Fragment() {
         binding.searchBtn.setOnClickListener {
             if(binding.searchTF.text.toString() != ""){
                 myActivity.pokeSearch(binding.searchTF.text.toString())
+                binding.searchTF.setText("")
             } else{
                 Toast.makeText(context, "Campo Vacío", Toast.LENGTH_LONG).show()
             }
@@ -71,17 +74,25 @@ class PokeInfo : Fragment() {
     private fun getPoke(type : Number){
 
         if(binding.catchTF2.text.toString() != ""){
-            pokeApi.getByName(binding.catchTF2.text.toString())
+
+            if(type == 0){
+                pokeApi.getByName(binding.catchTF2.text.toString(), true)
+            }else{
+                pokeApi.getByName(binding.catchTF2.text.toString(), false)
+            }
 
             pokeApi.poke.observe(viewLifecycleOwner){
 
                 when (type) {
-                    0  -> {
+                    /*0  -> {
                         myActivity.pokeDetail.setPoke(it)
+                        myActivity.pokeDetail.isCatch = false
                         myActivity.showFragment(myActivity.pokeDetail)
                     }
+                     */
                     1 -> {
                         myActivity.catchPoke(it)
+                        binding.catchTF2.setText("")
                     }
                 }
 

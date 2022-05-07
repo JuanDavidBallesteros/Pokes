@@ -10,6 +10,8 @@ import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.reto2.pokes.databinding.ActivityLoginBinding
+import com.reto2.pokes.fragments.Dialog
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,6 +37,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }.addOnFailureListener {
             Toast.makeText(this, it.message, Toast.LENGTH_LONG).show() //Mensaje
+            val dialog = Dialog()
+            dialog.title = "Inicio de sesión fallido"
+            dialog.content = it.message!!
+            dialog.show(supportFragmentManager, "dialogAlert")
         }
     }
 

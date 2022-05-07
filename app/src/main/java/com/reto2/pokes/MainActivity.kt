@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.reto2.pokes.databinding.ActivityMainBinding
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         user?.let {
                 user ->
             Firebase.firestore.collection("users")
-                .document(user.id).collection("pokes").get()
+                .document(user.id).collection("pokes").orderBy("catchDate", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener{
                         docSnap ->
                         val pokesList = docSnap.toObjects(Poke::class.java)
@@ -78,6 +79,13 @@ class MainActivity : AppCompatActivity() {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
         transaction.replace(binding.fragmentHolder.id, fragment!!)
+        transaction.commit()
+    }
+
+    fun showDetailFragment() {
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.replace(binding.fragmentHolder.id, pokeDetail)
         transaction.commit()
     }
 
@@ -105,7 +113,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun catchPoke(poke: Poke) {
-
         user?.let {
                 user ->
             Firebase.firestore.collection("users")

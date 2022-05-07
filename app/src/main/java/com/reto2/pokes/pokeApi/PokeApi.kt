@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.google.gson.Gson
+import com.reto2.pokes.MainActivity
 import com.reto2.pokes.fragments.PokeDetail
 import com.reto2.pokes.model.Poke
 import kotlinx.coroutines.Dispatchers
@@ -27,12 +28,14 @@ class PokeApi: ViewModel() {
     private lateinit var connection: HttpsURLConnection // el as HttpsURLConnection para poder conectarse a una pagina con https
     private var _poke:MutableLiveData<Poke> = MutableLiveData()
 
+    var mainActivity:MainActivity? = null
+
     val poke:LiveData<Poke>
         get(){
             return _poke
         }
 
-    fun getByName(name: String) {
+    fun getByName(name: String, case:Boolean) {
         var json = ""
 
         viewModelScope.launch (Dispatchers.IO){ // IO es un nuevo hilo, main mantiene el mismo hilo
@@ -45,8 +48,7 @@ class PokeApi: ViewModel() {
 
                 val obj = Gson().fromJson(json, PokeJson::class.java)
 
-                val date = Calendar.getInstance().time.toString().split(' ')
-                val displayDate = "${date[1]} ${date[2]} de ${date[5]}"
+                val date = Date().time
 
                 val temp = Poke(
                     UUID.randomUUID().toString(),
@@ -57,11 +59,17 @@ class PokeApi: ViewModel() {
                     obj.stats[2].base_stat,
                     obj.stats[5].base_stat,
                     obj.stats[0].base_stat,
-                    displayDate
+                    date
                 )
 
                 withContext(Dispatchers.Main){
                     _poke.value = temp
+                    if(case){
+                        mainActivity?.pokeDetail!!.setPoke(temp)
+                        mainActivity?.pokeDetail!!.isCatch = false
+                        mainActivity?.showDetailFragment()
+                    }
+
                 }
 
             } catch (e: FileNotFoundException){

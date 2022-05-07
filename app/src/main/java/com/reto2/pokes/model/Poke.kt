@@ -9,5 +9,5 @@ data class Poke(
     var defence: Int = 0,
     var speed: Int = 0,
     var health: Int = 0,
-    var catchDate: String = ""
+    var catchDate: Long = 0
 )

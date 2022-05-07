@@ -8,10 +8,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.reto2.pokes.MainActivity
 import com.reto2.pokes.R
 import com.reto2.pokes.fragments.PokeDetail
 import com.reto2.pokes.model.Poke
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Adapter() : RecyclerView.Adapter<PostVH>() {
 
@@ -35,34 +39,17 @@ class Adapter() : RecyclerView.Adapter<PostVH>() {
     override fun onBindViewHolder(holder: PostVH, position: Int) {
 
         holder.postName.text = _postList.value!![position].name
-        holder.postDate.text = _postList.value!![position].catchDate
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        holder.postDate.text = df.format(Date(_postList.value!![position].catchDate))
 
         // Poke Img
-        /*
-        val profileImg = BitmapFactory.decodeFile(postList[position].img)
-        val thumb1 = Bitmap.createScaledBitmap(
-            profileImg,
-            profileImg.width / 12,
-            profileImg.height / 12,
-            true
-        )
-        holder.postImg.setImageBitmap(thumb1)
-        */
-
-        val profileImg = BitmapFactory.decodeResource(
-            holder.postName.resources,
-            R.drawable.logo
-        )
-        val thumb1 = Bitmap.createScaledBitmap(profileImg, profileImg.width / 12, profileImg.height / 12, true)
-        holder.postImg.setImageBitmap(thumb1)
-
+        Glide.with(holder.postFrame).load(_postList.value!![position].img).centerCrop().into(holder.postImg)
 
         holder.postFrame.setOnClickListener {
             myActivity.pokeDetail.setPoke(_postList.value!![position])
             myActivity.pokeDetail.isCatch = true
             myActivity.showFragment(myActivity.pokeDetail)
         }
-
     }
 
     override fun getItemCount(): Int {
